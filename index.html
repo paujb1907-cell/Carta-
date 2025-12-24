@@ -1,45 +1,142 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Per a tu 🤍</title>
+
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-image: url("foto1.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-image 2s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      background: #e67e22;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #cf711c;
+    }
+
+    .error {
+      color: #c0392b;
+      margin-top: 10px;
+    }
+
+    .letter {
+      display: none;
+      text-align: left;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    .play {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2 id="title">Només per a tu 🤍</h2>
+  <p id="subtitle">Introdueix la contrasenya</p>
+
+  <input type="password" id="password" placeholder="Contrasenya">
+  <br>
+  <button onclick="checkPassword()">Entrar</button>
+
+  <p class="error" id="error"></p>
+
+  <div class="play" id="playBox">
+    <button onclick="playMusic()">▶️ Reproduir música</button>
+  </div>
+
+  <div class="letter" id="letter">
+    <h3>La meva carta</h3>
+    <p>
+      Aquí va la carta que escriuràs amb el cor.
+    </p>
+    <p>
+      Amb tot el meu cor,<br>
+      <strong>Pau</strong>
+    </p>
+  </div>
+</div>
+
+<audio id="music">
+  <source src="De l'1 al què.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-  const images = [
-    "foto1.jpg",
-    "foto2.jpg",
-    "foto3.jpg"
-  ];
-
-  let current = 0;
-
-  function startSlideshow() {
-    document.body.style.backgroundImage = `url(${images[current]})`;
-
-    setInterval(() => {
-      current = (current + 1) % images.length;
-      document.body.style.backgroundImage = `url(${images[current]})`;
-    }, 6000);
-  }
+  const fotos = ["foto1.jpeg", "foto2.jpeg", "foto3.jpeg"];
+  let index = 0;
 
   function checkPassword() {
     const correctPassword = "23082024";
     const input = document.getElementById("password").value;
     const error = document.getElementById("error");
-    const letter = document.getElementById("letter");
-    const intro = document.getElementById("intro");
 
     if (input === correctPassword) {
-      document.body.classList.add("unlocked");
-
-      // FORCEM LA PRIMERA IMATGE
-      document.body.style.backgroundImage = "url('foto1.jpg')";
-
-      intro.style.display = "none";
-      letter.style.display = "block";
-      error.textContent = "";
-      document.querySelector("input").style.display = "none";
+      document.getElementById("letter").style.display = "block";
+      document.getElementById("playBox").style.display = "block";
+      document.getElementById("password").style.display = "none";
       document.querySelector("button").style.display = "none";
+      document.getElementById("title").style.display = "none";
+      document.getElementById("subtitle").style.display = "none";
+      error.textContent = "";
 
-      startSlideshow();
+      setInterval(() => {
+        index = (index + 1) % fotos.length;
+        document.body.style.backgroundImage = `url('${fotos[index]}')`;
+      }, 5000);
+
     } else {
       error.textContent = "La contrasenya no és correcta 💔";
     }
   }
+
+  function playMusic() {
+    const music = document.getElementById("music");
+    music.volume = 0.4;
+    music.play();
+  }
 </script>
 
-
+</body>
+</html>
